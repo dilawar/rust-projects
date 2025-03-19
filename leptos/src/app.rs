@@ -1,13 +1,21 @@
 use leptos::prelude::*;
 use leptos_router::components::{Route, Router, Routes};
 use leptos_router::path;
+use leptos_use::storage::use_local_storage;
+use codee::string::JsonSerdeCodec;
 
 use crate::components::home;
+use crate::storage::AppState;
 
 stylance::import_crate_style!( #[allow(dead_code)] app_style, "src/app.module.scss");
 
 #[component]
 pub fn App() -> impl IntoView {
+
+    let (storage_email, set_storage_email) = signal("email".to_string());
+    let (state, set_state, reset) = use_local_storage::<AppState, JsonSerdeCodec>(storage_email);
+
+
     view! {
         <Router>
             <h1>"Leptos App"</h1>

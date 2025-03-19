@@ -2,6 +2,22 @@
 .header {
 }
 
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 10px;
+}
+
+main {
+  max-width: 95%;
+  margin: auto;
+}
+
 .nav {
   display: flex;
+  flex-direction: row;
+}
+
+.nav a {
+  margin: 1ex;
 }

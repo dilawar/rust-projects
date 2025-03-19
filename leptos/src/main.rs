@@ -2,7 +2,7 @@ use tracing_subscriber::fmt;
 use tracing_subscriber_wasm::MakeConsoleWriter;
 
 mod app;
-
+mod storage;
 mod components;
 
 fn main() {

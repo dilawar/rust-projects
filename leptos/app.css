@@ -2,6 +2,22 @@
 .header-bb66a2d {
 }
 
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 10px;
+}
+
+main {
+  max-width: 95%;
+  margin: auto;
+}
+
 .nav-bb66a2d {
   display: flex;
+  flex-direction: row;
+}
+
+.nav-bb66a2d a {
+  margin: 1ex;
 }
