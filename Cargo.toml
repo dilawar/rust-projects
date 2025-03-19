@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = [ "leptons" ]
+members = [ "leptos" ]
 
 [workspace.dependencies]
 anyhow = "1.0.95"
