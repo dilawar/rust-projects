@@ -3,14 +3,13 @@
 }
 
 body {
-  max-width: 800px;
+  max-width: 100ex;
   margin: auto;
   padding: 10px;
 }
 
 main {
-  max-width: 95%;
-  margin: auto;
+  margin: 1ex;
 }
 
 .nav-bb66a2d {

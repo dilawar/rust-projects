@@ -1,13 +1,17 @@
 use leptos::prelude::*;
+use thaw::*;
 
 #[component]
 pub fn Home() -> impl IntoView {
-    let email = RwSignal::new("".to_string());
-    let password = RwSignal::new("".to_string());
+
+    let email = RwSignal::new(String::from("i"));
+    let password = RwSignal::new(String::from("p"));
 
     view! {
-        <input type="text" bind:value=email />
-        <input type="password" bind:value=password />
-        <button>Login</button>
+        <Flex vertical=true>
+            <Input email placeholder="Email" />
+            <Input password input_type=InputType::Password placeholder="OTP/API Key" />
+            <Button>"Login"</Button>
+        </Flex>
     }
 }
