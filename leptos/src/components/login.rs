@@ -1,18 +1,29 @@
 use leptos::logging::log;
 
+use codee::string::JsonSerdeCodec;
 use leptos::prelude::*;
+use leptos_use::storage::use_local_storage;
 use thaw::*;
 
 use crate::css::styles;
+use crate::storage::LoginState;
 
 #[component]
 pub fn Login() -> impl IntoView {
-    let email = RwSignal::new(String::from(""));
-    let password = RwSignal::new(String::from(""));
+    let (storage_key, _) = signal(LoginState::KEY.to_string());
+    let (state, set_state, _) = use_local_storage::<LoginState, JsonSerdeCodec>(storage_key);
+
+    let email_init = state.get().email;
+    let api_key_init = state.get().api_key;
+
+    let email = RwSignal::new(email_init);
+    let password = RwSignal::new(api_key_init);
 
     let login_clicked = move |_| {
         log!("Login button is clicked");
-        log!("Email={} and password={}", email.get(), password.get());
+        set_state.update(|s| s.email = email.get());
+        set_state.update(|s| s.api_key = password.get());
+        set_state.update(|s| s.logged_in = true);
     };
 
     view! {
