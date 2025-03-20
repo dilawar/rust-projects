@@ -26,9 +26,5 @@ pub fn Login() -> impl IntoView {
 
 #[component]
 pub fn AlreadyLoggedIn() -> impl IntoView {
-    view! {
-        <Flex>
-            <Text>"Already logged in!"</Text>
-        </Flex>
-    }
+    view! { <div></div> }
 }
