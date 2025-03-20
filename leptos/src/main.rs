@@ -4,6 +4,7 @@ use tracing_subscriber_wasm::MakeConsoleWriter;
 mod app;
 mod storage;
 mod components;
+mod css;
 
 fn main() {
     fmt()

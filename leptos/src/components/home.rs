@@ -1,23 +1,21 @@
 use leptos::prelude::*;
-use leptos::logging::log;
-use thaw::*;
+
+use crate::components::login::{AlreadyLoggedIn, Login};
 
 #[component]
 pub fn Home() -> impl IntoView {
 
-    let email = RwSignal::new(String::from(""));
-    let password = RwSignal::new(String::from(""));
-
-    let login_clicked = move |_| {
-        log!("Login button is clicked");
-        log!("Email={} and password={}", email.get(), password.get());
-    };
+    let is_logged_in = RwSignal::new(false);
 
     view! {
-        <Flex vertical=true>
-            <Input value=email placeholder="Email" />
-            <Input value=password input_type=InputType::Password placeholder="OTP/API Key" />
-            <Button on_click=login_clicked>"Login"</Button>
-        </Flex>
+        <h1>"Login"</h1>
+        {move || match is_logged_in.get() {
+            true => view! { 
+                <Login /> 
+            }.into_view(),
+            _ => view! { 
+                <AlreadyLoggedIn />
+            }.into_view(),
+        }}
     }
 }
