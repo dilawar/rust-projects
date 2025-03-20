@@ -12,8 +12,8 @@ stylance::import_crate_style!( #[allow(dead_code)] app_style, "src/app.module.sc
 #[component]
 pub fn App() -> impl IntoView {
 
-    let (storage_email, set_storage_email) = signal("email".to_string());
-    let (state, set_state, reset) = use_local_storage::<AppState, JsonSerdeCodec>(storage_email);
+    let (storage_email, _set_storage_email) = signal("email".to_string());
+    let (_state, _set_state, _reset) = use_local_storage::<AppState, JsonSerdeCodec>(storage_email);
 
 
     view! {
