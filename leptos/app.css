@@ -1,5 +1,5 @@
 // This file is generated from ./src/app.module.scss 
-.header-bb66a2d {
+.header-372e0a1 {
 }
 
 body {
@@ -12,11 +12,16 @@ main {
   margin: 1ex;
 }
 
-.nav-bb66a2d {
+.nav-372e0a1 {
   display: flex;
   flex-direction: row;
 }
 
-.nav-bb66a2d a {
+.nav-372e0a1 a {
   margin: 1ex;
+}
+
+.login-372e0a1 {
+  max-width: 30em;
+  margin: auto;
 }

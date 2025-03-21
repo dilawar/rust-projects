@@ -1,35 +1,31 @@
 use leptos::prelude::*;
 use leptos_router::components::{Route, Router, Routes};
 use leptos_router::path;
-use leptos_use::storage::use_local_storage;
-use codee::string::JsonSerdeCodec;
+use reactive_stores::Store;
 use thaw::*;
 
-use crate::components::home;
-use crate::storage::AppState;
-
-stylance::import_crate_style!( #[allow(dead_code)] app_style, "src/app.module.scss");
+use crate::components::{home, login};
+use crate::storage::GlobalState;
 
 #[component]
 pub fn App() -> impl IntoView {
-
-    let (storage_email, _set_storage_email) = signal("email".to_string());
-    let (_state, _set_state, _reset) = use_local_storage::<AppState, JsonSerdeCodec>(storage_email);
-
     let theme = RwSignal::new(Theme::light());
+
+    provide_context(Store::new(GlobalState::default()));
 
     view! {
         <Router>
-            <h1>"Leptos App"</h1>
-            <nav class=app_style::nav>
-                <a href="/">"Home"</a>
-                <a href="/ehr/form">"EHR Form"</a>
-            </nav>
+            <h3>"Rusty App"</h3>
             <ConfigProvider theme>
+                <nav class=crate::css::styles::nav>
+                    <a href="/">"Home"</a>
+                    <a href="/form">"Form"</a>
+                    <a href="/login">"Login"</a>
+                </nav>
                 <main>
                     <Routes fallback=|| "not found.">
                         <Route path=path!("/") view=home::Home />
-                        <Route path=path!("/ehr/form") view=home::Home />
+                        <Route path=path!("/login") view=login::Login />
                     </Routes>
                 </main>
             </ConfigProvider>

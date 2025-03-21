@@ -1,23 +1,19 @@
 use leptos::prelude::*;
-use leptos::logging::log;
-use thaw::*;
+use reactive_stores::Store;
+
+use crate::components::login::{AlreadyLoggedIn, Login};
+use crate::storage::{GlobalState, GlobalStateStoreFields};
 
 #[component]
 pub fn Home() -> impl IntoView {
+    let state = expect_context::<Store<GlobalState>>();
 
-    let email = RwSignal::new(String::from(""));
-    let password = RwSignal::new(String::from(""));
-
-    let login_clicked = move |_| {
-        log!("Login button is clicked");
-        log!("Email={} and password={}", email.get(), password.get());
-    };
+    let logged_in = state.is_logged_in();
+    tracing::info!("Already logged in? {}", logged_in.get_untracked());
 
     view! {
-        <Flex vertical=true>
-            <Input value=email placeholder="Email" />
-            <Input value=password input_type=InputType::Password placeholder="OTP/API Key" />
-            <Button on_click=login_clicked>"Login"</Button>
-        </Flex>
+        <Show when=move || !logged_in.get() fallback=|| view! { <AlreadyLoggedIn /> }>
+            <Login />
+        </Show>
     }
 }

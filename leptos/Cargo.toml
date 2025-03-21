@@ -6,10 +6,11 @@ edition = "2024"
 [dependencies]
 codee = { version = "0.3.0", features = ["json_serde"] }
 console_error_panic_hook = "0.1.7"
-leptos = { version = "0.7.7", features = ["csr", "nightly"] }
+leptos = { version = "0.7.7", features = ["csr", "nightly", "tracing"] }
 leptos-use = { version = "0.15.7", features = ["storage", "docs" ] }
 leptos_meta = "0.7.7"
 leptos_router = { version = "0.7.7", features = ["tracing"] }
+reactive_stores = "0.1.8"
 serde = { workspace = true, features = ["derive"] }
 stylance = "0.5.5"
 thaw = { version = "0.4.4", features = ["csr", "nightly"] }
