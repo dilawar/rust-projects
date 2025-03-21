@@ -2,12 +2,13 @@ use tracing_subscriber::fmt;
 use tracing_subscriber_wasm::MakeConsoleWriter;
 
 mod app;
-mod storage;
 mod components;
 mod css;
+mod storage;
 
 fn main() {
     fmt()
+        .with_ansi(false)
         .with_writer(MakeConsoleWriter::default().map_trace_level_to(tracing::Level::DEBUG))
         // For some reason, if we don't do this in the browser, we get a runtime error.
         .without_time()

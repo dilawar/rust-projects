@@ -1,29 +1,24 @@
-use leptos::logging::log;
-
-use codee::string::JsonSerdeCodec;
+// use codee::string::JsonSerdeCodec;
 use leptos::prelude::*;
-use leptos_use::storage::use_local_storage;
+// use leptos_use::storage::use_local_storage;
+use reactive_stores::Store;
 use thaw::*;
 
 use crate::css::styles;
-use crate::storage::LoginState;
+use crate::storage::{GlobalState, GlobalStateStoreFields};
 
 #[component]
 pub fn Login() -> impl IntoView {
-    let (storage_key, _) = signal(LoginState::KEY.to_string());
-    let (state, set_state, _) = use_local_storage::<LoginState, JsonSerdeCodec>(storage_key);
-
-    let email_init = state.get().email;
-    let api_key_init = state.get().api_key;
-
-    let email = RwSignal::new(email_init);
-    let password = RwSignal::new(api_key_init);
+    let state = expect_context::<Store<GlobalState>>();
+    let logged_in = state.is_logged_in();
+    let email = state.email();
+    let password = state.api_key();
 
     let login_clicked = move |_| {
-        log!("Login button is clicked");
-        set_state.update(|s| s.email = email.get());
-        set_state.update(|s| s.api_key = password.get());
-        set_state.update(|s| s.logged_in = true);
+        tracing::debug!("Login button is clicked. Email={}", email.get_untracked());
+        tracing::info!("TODO: implement the login flow here");
+
+        *logged_in.write() = true;
     };
 
     view! {
@@ -37,5 +32,20 @@ pub fn Login() -> impl IntoView {
 
 #[component]
 pub fn AlreadyLoggedIn() -> impl IntoView {
-    view! { <div></div> }
+    let state = expect_context::<Store<GlobalState>>();
+    let logged_in = state.is_logged_in();
+    let email = state.email();
+    let password = state.api_key();
+
+    let logout = move |_| {
+        tracing::info!("Starting logout...");
+        *email.write() = String::default();
+        *password.write() = String::default();
+        *logged_in.write() = false;
+    };
+
+    view! {
+        <div>"Already logged in"</div>
+        <Button on_click=logout>"Logout"</Button>
+    }
 }
