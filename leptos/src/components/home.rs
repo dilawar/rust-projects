@@ -1,7 +1,7 @@
 use leptos::prelude::*;
 use reactive_stores::Store;
 
-use crate::components::login::{AlreadyLoggedIn, Login};
+use crate::components::login::{Login};
 use crate::storage::{GlobalState, GlobalStateStoreFields};
 
 #[component]
@@ -12,7 +12,7 @@ pub fn Home() -> impl IntoView {
     tracing::info!("Already logged in? {}", logged_in.get_untracked());
 
     view! {
-        <Show when=move || !logged_in.get() fallback=|| view! { <AlreadyLoggedIn /> }>
+        <Show when=move || !logged_in.get()>
             <Login />
         </Show>
     }

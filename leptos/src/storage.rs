@@ -23,4 +23,6 @@ pub struct GlobalState {
     pub api_key: String,
     /// Is user logged in
     pub is_logged_in: bool,
+    /// Loading (show spinner when true)
+    pub loading: bool,
 }
