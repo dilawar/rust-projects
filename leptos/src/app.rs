@@ -4,8 +4,8 @@ use leptos_router::path;
 use reactive_stores::Store;
 use thaw::*;
 
-use crate::components::{home, login};
-use crate::storage::GlobalState;
+use crate::components::{home};
+use crate::storage::{GlobalState, GlobalStateStoreFields};
 
 #[component]
 pub fn App() -> impl IntoView {
@@ -13,19 +13,23 @@ pub fn App() -> impl IntoView {
 
     provide_context(Store::new(GlobalState::default()));
 
+    let store = expect_context::<Store<GlobalState>>();
+    let logged_in = store.is_logged_in();
+
     view! {
         <Router>
-            <h3>"Rusty App"</h3>
+            <h3>"Leptos App"</h3>
             <ConfigProvider theme>
                 <nav class=crate::css::styles::nav>
                     <a href="/">"Home"</a>
                     <a href="/form">"Form"</a>
-                    <a href="/login">"Login"</a>
+                    <Show when=move ||  { logged_in.get() } >
+                        <a href="">"Logout"</a>
+                    </Show>
                 </nav>
                 <main>
                     <Routes fallback=|| "not found.">
                         <Route path=path!("/") view=home::Home />
-                        <Route path=path!("/login") view=login::Login />
                     </Routes>
                 </main>
             </ConfigProvider>
