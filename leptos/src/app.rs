@@ -5,7 +5,7 @@ use reactive_stores::Store;
 use thaw::*;
 
 use crate::css::styles;
-use crate::components::{home, login};
+use crate::components::*;
 use crate::storage::{GlobalState, GlobalStateStoreFields};
 
 #[component]
@@ -25,13 +25,15 @@ pub fn App() -> impl IntoView {
                 <nav class=styles::nav>
                     <a href="/">"Home"</a>
                     <a href="/form">"Form"</a>
+                    <a href="/qr">"QR Scanner"</a>
                     <Show when=move || { logged_in.get() }>
                         <login::Logout />
                     </Show>
                 </nav>
                 <main>
-                    <Routes fallback=|| "not found.">
-                        <Route path=path!("/") view=home::Home />
+                    <Routes fallback=|| "Page not found.">
+                        <Route path=path!("/") view=Home />
+                        <Route path=path!("/qr") view=QrScanner />
                     </Routes>
                 </main>
                 <div class=styles::loading>

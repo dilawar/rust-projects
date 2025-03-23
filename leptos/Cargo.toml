@@ -7,7 +7,7 @@ edition = "2024"
 codee = { version = "0.3.0", features = ["json_serde"] }
 console_error_panic_hook = "0.1.7"
 leptos = { version = "0.7.7", features = ["csr", "nightly", "tracing"] }
-leptos-qr-scanner = { git = "https://github.com/elsirion/leptos-qr-scanner" }
+leptos-qr-scanner = { git = "https://github.com/dilawar/leptos-qr-scanner" }
 leptos-use = { version = "0.15.7", features = ["storage", "docs" ] }
 leptos_meta = "0.7.7"
 leptos_router = { version = "0.7.7", features = ["tracing"] }

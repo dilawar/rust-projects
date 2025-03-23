@@ -1,2 +1,10 @@
+#![allow(unused_imports)]
+
 pub(crate) mod home;
+pub use home::*;
+
 pub(crate) mod login;
+pub use login::*;
+
+pub(crate) mod qr;
+pub use qr::*;
