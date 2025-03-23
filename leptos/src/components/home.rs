@@ -1,7 +1,7 @@
 use leptos::prelude::*;
 use reactive_stores::Store;
 
-use crate::components::login::{Login};
+use crate::components::login::Login;
 use crate::storage::{GlobalState, GlobalStateStoreFields};
 
 #[component]
