@@ -5,6 +5,6 @@ fix:
 	cargo clippy --fix --allow-dirty
 
 fmt:
-	cargo +nigthly fmt
+	cargo +nightly fmt
 
 
