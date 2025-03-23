@@ -4,8 +4,8 @@ use leptos_router::path;
 use reactive_stores::Store;
 use thaw::*;
 
-use crate::css::styles;
 use crate::components::*;
+use crate::css::styles;
 use crate::storage::{GlobalState, GlobalStateStoreFields};
 
 #[component]

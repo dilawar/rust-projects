@@ -1,9 +1,9 @@
 //! QrCode related components.
 
+use leptos::prelude::*;
+use leptos_qr_scanner::Scan;
 use reactive_stores::Store;
 use thaw::*;
-use leptos_qr_scanner::Scan;
-use leptos::prelude::*;
 
 use crate::css::styles;
 use crate::storage::{GlobalState, GlobalStateStoreFields};
