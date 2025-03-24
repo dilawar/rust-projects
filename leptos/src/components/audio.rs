@@ -3,6 +3,8 @@
 use leptos::prelude::*;
 use leptos_use::{use_user_media_with_options, UseUserMediaOptions, UseUserMediaReturn};
 use thaw::*;
+use web_sys::wasm_bindgen::{closure::Closure, JsCast, JsValue};
+use web_sys::MediaRecorder;
 
 use crate::css::styles;
 
@@ -23,7 +25,15 @@ pub fn AudioStream() -> impl IntoView {
         ..
     } = use_user_media_with_options(options);
 
-    // start/stop recording 
+    let on_data_available = Closure::wrap(Box::new(move |data: JsValue| {
+        if let Ok(blob) = data.dyn_into::<web_sys::BlobEvent>() {
+            tracing::info!(" Data available on stream: {:?}", &blob);
+        } else {
+            tracing::info!(" bad data");
+        }
+    }) as Box<dyn FnMut(JsValue)>);
+
+    // start/stop recording
     let _effect = Effect::watch(
         move || start_rec.get(),
         move |val, _prev, _| {
@@ -35,16 +45,19 @@ pub fn AudioStream() -> impl IntoView {
                 start();
             }
         },
-        true, /* Trigger it as soon as possible */
+        false, /* Trigger it as soon as possible */
     );
 
     Effect::new(move |_| {
         tracing::debug!("State of the recording: {}.", start_rec.get_untracked());
         node.get().map(|v| match stream.get() {
             Some(Ok(s)) => {
-                tracing::debug!("Setting stream {s:?} to src...");
+                tracing::info!("Setting stream {s:?} to src...");
                 v.set_src_object(Some(&s));
-            },
+                let recorder = MediaRecorder::new_with_media_stream(&s).unwrap();
+                recorder.set_ondataavailable(Some(on_data_available.as_ref().unchecked_ref()));
+                recorder.start_with_time_slice(1000).unwrap();
+            }
             Some(Err(e)) => tracing::error!("Failed to get media stream: {e:?}"),
             None => tracing::debug!("No stream yet"),
         });
