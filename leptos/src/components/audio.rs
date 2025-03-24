@@ -1,8 +1,15 @@
 //! Audio Streamer component
 
 use leptos::prelude::*;
-use leptos_use::{use_user_media_with_options, UseUserMediaOptions, UseUserMediaReturn};
+use leptos_use::{
+    use_interval, use_user_media_with_options, UseIntervalReturn,
+    UseUserMediaOptions, UseUserMediaReturn,
+};
 use thaw::*;
+
+use cpal::traits::DeviceTrait;
+use cpal::traits::HostTrait;
+use cpal::traits::StreamTrait;
 
 use crate::css::styles;
 
@@ -11,53 +18,38 @@ pub fn AudioStream() -> impl IntoView {
     let node = NodeRef::<leptos::html::Audio>::new();
 
     let start_rec = RwSignal::new(true);
-    let result = RwSignal::new_local("".to_string());
-
-    // Create options to fetch only audio stream.
-    let options = UseUserMediaOptions::default().video(false).audio(true);
-
-    let UseUserMediaReturn {
-        stream,
-        start,
-        stop,
-        ..
-    } = use_user_media_with_options(options);
-
-    stream.add_event_listener_with_callback
-
-    // start/stop recording 
-    let _effect = Effect::watch(
-        move || start_rec.get(),
-        move |val, _prev, _| {
-            if !val {
-                tracing::info!("Stopping recording.");
-                stop();
-            } else {
-                tracing::info!("Starting recording.");
-                start();
-            }
-        },
-        true, /* Trigger it as soon as possible */
-    );
+    let pcm_data = RwSignal::new(vec![]);
 
     Effect::new(move |_| {
-        tracing::debug!("State of the recording: {}.", start_rec.get_untracked());
-        node.get().map(|v| match stream.get() {
-            Some(Ok(s)) => {
-                tracing::debug!("Setting stream {s:?} to src...");
-                v.set_src_object(Some(&s));
-            },
-            Some(Err(e)) => tracing::error!("Failed to get media stream: {e:?}"),
-            None => tracing::debug!("No stream yet"),
-        });
+        // Get the default audio host and input device.
+        let host = cpal::default_host();
+        let device = host
+            .default_input_device()
+            .expect("No input device available");
+        let config = device
+            .default_input_config()
+            .expect("Failed to get input config");
+
+        // start the audio stream
+        let stream: cpal::Stream = device
+            .build_input_stream(
+                &config.into(),
+                move |data: &[f32], _: &cpal::InputCallbackInfo| {
+                    pcm_data.update(|samples| {
+                        samples.clear();
+                        samples.extend_from_slice(data);
+                    });
+                },
+                |err| tracing::error!("Stream error: {err}"),
+                None,
+            )
+            .expect("Failed to build input stream");
+
+        stream.play().expect("failed to play stream");
     });
 
     view! {
-        <Space vertical=true>
-            // Eventually I was to draw something related to audio stream here.
-            <canvas />
-            <audio node_ref=node controls  />
-            <Switch checked=start_rec label="Start Record" />
-        </Space>
+        // Eventually I was to draw something related to audio stream here.
+        <Switch checked=start_rec label="Start Record" />
     }
 }
