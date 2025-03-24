@@ -69,13 +69,15 @@ pub fn AudioStream() -> impl IntoView {
                 start();
             }
         },
-        false, /* Trigger it as soon as possible */
+        true, /* Trigger it as soon as possible */
     );
 
     // Watch async_blob
     Effect::new(move |_| {
         if let Some(blob_resource) = async_blob.get() {
-            tracing::info!("Got blob of buffer {:?}", blob_resource.read().as_deref());
+            if let Some(Ok(data)) = blob_resource.read().as_deref() {
+                tracing::info!("Got blob of buffer {data:?}");
+            }
         }
     });
 
