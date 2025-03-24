@@ -26,6 +26,7 @@ tracing-subscriber.workspace = true
 tracing-subscriber-wasm = "0.1.0"
 web-sys = { version = "0.3.77", features = [
   "BlobEvent",
+  "CanvasRenderingContext2d",
   "MediaRecorder",
   "AudioNode",
 ] }
