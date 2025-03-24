@@ -26,6 +26,7 @@ pub fn App() -> impl IntoView {
                     <a href="/">"Home"</a>
                     <a href="/form">"Form"</a>
                     <a href="/qr">"QR Scanner"</a>
+                    <a href="/audio">"Audio Rec"</a>
                     <Show when=move || { logged_in.get() }>
                         <login::Logout />
                     </Show>
@@ -34,6 +35,7 @@ pub fn App() -> impl IntoView {
                     <Routes fallback=|| "Page not found.">
                         <Route path=path!("/") view=Home />
                         <Route path=path!("/qr") view=QrScanner />
+                        <Route path=path!("/audio") view=AudioStream />
                     </Routes>
                 </main>
                 <div class=styles::loading>

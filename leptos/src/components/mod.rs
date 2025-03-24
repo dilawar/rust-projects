@@ -8,3 +8,6 @@ pub use login::*;
 
 pub(crate) mod qr;
 pub use qr::*;
+
+pub(crate) mod audio;
+pub use audio::*;
