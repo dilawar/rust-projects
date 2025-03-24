@@ -23,8 +23,6 @@ pub fn AudioStream() -> impl IntoView {
         ..
     } = use_user_media_with_options(options);
 
-    stream.add_event_listener_with_callback
-
     // start/stop recording 
     let _effect = Effect::watch(
         move || start_rec.get(),
