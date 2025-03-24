@@ -20,11 +20,11 @@ pub fn QrScanner() -> impl IntoView {
             active=scan
             on_scan=move |a| {
                 tracing::info!("Found: {}", &a);
-                if ! multiple.get_untracked() {
+                if !multiple.get_untracked() {
                     result.set(vec![a]);
                 } else {
                     let vals = result.read_untracked();
-                    if ! vals.contains(&a) {
+                    if !vals.contains(&a) {
                         result.write().push(a)
                     }
                 }
