@@ -17,7 +17,7 @@ pub fn AudioStream() -> impl IntoView {
     let node = NodeRef::<leptos::html::Audio>::new();
 
     let start_rec = RwSignal::new(true);
-    let result = RwSignal::new_local("".to_string());
+    let async_blob = RwSignal::new(None);
 
     // Create options to fetch only audio stream.
     let options = UseUserMediaOptions::default().video(false).audio(true);
@@ -32,10 +32,11 @@ pub fn AudioStream() -> impl IntoView {
     let on_data_available = Closure::wrap(Box::new(move |data: JsValue| {
         if let Ok(blob) = data.dyn_into::<web_sys::BlobEvent>() {
             if let Some(data) = blob.data() {
+                // convert to gloo_file Blog.
                 let blob = gloo_file::Blob::from(data);
-                tracing::info!(" Data available on stream: {:?}", &blob);
-                let data = futures::executor::block_on(gloo_file::futures::read_as_bytes(&blob)).unwrap();
-                tracing::info!("{} bytes", data.len());
+                *async_blob.write() = Some(LocalResource::new(move || {
+                    gloo_file::futures::read_as_bytes(&blob)
+                }));
             }
         } else {
             tracing::info!(" bad data");
@@ -70,6 +71,13 @@ pub fn AudioStream() -> impl IntoView {
         },
         false, /* Trigger it as soon as possible */
     );
+
+    // Watch async_blob
+    Effect::new(move |_| {
+        if let Some(blob_resource) = async_blob.get() {
+            tracing::info!("Got blob of buffer {:?}", blob_resource.read().as_deref());
+        }
+    });
 
     view! {
         <Space vertical=true>
