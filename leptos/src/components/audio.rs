@@ -92,7 +92,7 @@ pub fn AudioStream() -> impl IntoView {
                 for (i, v) in data.iter().enumerate() {
                     ctx.line_to(
                         i as f64,
-                        *v as f64 / 10.0 + 50.0, /* 50 is half of height of canvas */
+                        *v as f64 / 5.0 + 50.0, /* 50 is half of height of canvas */
                     )
                 }
                 ctx.stroke(); // render
