@@ -45,19 +45,21 @@ pub fn AudioStream() -> impl IntoView {
     }) as Box<dyn FnMut(JsValue)>);
 
     Effect::new(move |_| {
-        node.get().map(|v| match stream.get() {
-            Some(Ok(s)) => {
-                tracing::info!("Setting stream {s:?} to src...");
-                v.set_src_object(Some(&s));
-                let recorder = MediaRecorder::new_with_media_stream(&s).unwrap();
-                recorder.set_ondataavailable(Some(on_data_available.as_ref().unchecked_ref()));
-                recorder.start_with_time_slice(500).unwrap();
+        if let Some(v) = node.get() {
+            match stream.get() {
+                Some(Ok(s)) => {
+                    tracing::info!("Setting stream {s:?} to src...");
+                    v.set_src_object(Some(&s));
+                    let recorder = MediaRecorder::new_with_media_stream(&s).unwrap();
+                    recorder.set_ondataavailable(Some(on_data_available.as_ref().unchecked_ref()));
+                    recorder.start_with_time_slice(500).unwrap();
+                }
+                Some(Err(e)) => tracing::error!("Failed to get media stream: {e:?}"),
+                None => tracing::debug!("No stream yet"),
             }
-            Some(Err(e)) => tracing::error!("Failed to get media stream: {e:?}"),
-            None => tracing::debug!("No stream yet"),
-        });
+        }
     });
-
+    
     // start/stop recording
     let _effect = Effect::watch(
         move || start_rec.get(),

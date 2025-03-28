@@ -46,3 +46,8 @@ main {
   max-height: 100px;
   background-color: ivory;
 }
+
+.ehr_list-372e0a1 label {
+  width: 150px;
+  align-items: center;
+}

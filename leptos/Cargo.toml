@@ -30,4 +30,8 @@ web-sys = { version = "0.3.77", features = [
   "CanvasRenderingContext2d",
   "MediaRecorder",
   "AudioNode",
+  "File",
+  "FileList",
 ] }
+itertools.workspace = true
+strum = { workspace = true, features = ["derive"] }
