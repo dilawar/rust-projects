@@ -103,12 +103,10 @@ pub fn AudioStream() -> impl IntoView {
     view! {
         <Space vertical=true>
             // Eventually I was to draw something related to audio stream here.
-            <canvas node_ref=canvas_node class=styles::canvas  />
+            <canvas node_ref=canvas_node class=styles::canvas />
             <audio node_ref=node controls />
             <Switch checked=start_rec label="Start Record" />
-            <div>
-                "Record and plot every half second of data"
-            </div>
+            <div>"Record and plot every half second of data"</div>
         </Space>
     }
 }
