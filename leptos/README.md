@@ -14,4 +14,4 @@ Scans QR code in `single` or `multiple` mode.
 
 The values are stored in local storage at key set by field `Code`.
 
-![leptos_gif]((https://github.com/user-attachments/assets/41e725d9-bb92-4976-9880-e849d378cbde)
+![leptos_gif](https://github.com/user-attachments/assets/41e725d9-bb92-4976-9880-e849d378cbde)
