@@ -34,6 +34,7 @@ pub fn App() -> impl IntoView {
                 <main>
                     <Routes fallback=|| "Page not found.">
                         <Route path=path!("/") view=Home />
+                        <Route path=path!("/form") view=Form />
                         <Route path=path!("/qr") view=QrScanner />
                         <Route path=path!("/audio") view=AudioStream />
                     </Routes>
@@ -52,6 +53,7 @@ fn AppSpinner() -> impl IntoView {
     let loading = store.loading();
 
     view! {
+        // Show spinner when global `loading` is set to true.
         <Show when=move || loading.get()>
             <Spinner />
         </Show>

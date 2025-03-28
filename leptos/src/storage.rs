@@ -2,17 +2,25 @@
 
 #![allow(dead_code)]
 
+use std::collections::HashMap;
 use reactive_stores::Store;
 
+// Local store to store data before we 
 #[derive(serde::Serialize, serde::Deserialize, Clone, PartialEq, Default)]
-pub(crate) struct LocalStorage {
-    pub trainer: String,
+pub(crate) struct EhrSection1 {
+    pub sample_code: String,
+    pub patient_name: String,
 }
 
-impl LocalStorage {
+// Local store to store data before we 
+#[derive(serde::Serialize, serde::Deserialize, Clone, PartialEq, Default)]
+pub(crate) struct KeyVal(pub HashMap<String, String>);
+
+impl EhrSection1 {
     /// Key to use in local storage
-    pub const KEY: &'static str = "login-state";
+    pub const KEY: &'static str = "ehr-section-1";
 }
+
 
 /// Global state to be shared across components.
 #[derive(Clone, Debug, Default, Store)]
