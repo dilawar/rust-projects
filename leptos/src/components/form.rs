@@ -42,7 +42,7 @@ pub fn Form() -> impl IntoView {
 
             // Everything starts with this key
             <ListItem label="Code".to_string()>
-                <input bind:value=storage_key></input>
+                <input bind:value=storage_key />
             </ListItem>
 
             // Patient
