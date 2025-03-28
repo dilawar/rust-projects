@@ -20,7 +20,7 @@ pub fn App() -> impl IntoView {
 
     view! {
         <Router>
-            <h3>"Dognosis Portal"</h3>
+            <h3>"Leptos App"</h3>
             <ConfigProvider theme>
                 <nav class=styles::nav>
                     <a href="/">"Home"</a>
