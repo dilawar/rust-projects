@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = [ "leptos" ]
+members = [ "leptos" , "android-dioxus"]
 
 [workspace.dependencies]
 anyhow = "1.0.95"
