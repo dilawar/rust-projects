@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rinf/rinf.dart';
+
 import './messages/generated.dart';
+import 'package:demo/messages/tutorial_message.pb.dart';
 
 void main() async {
   await initializeRust(assignRustSignal);
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter/Rust Demo',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -114,6 +116,12 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            ElevatedButton(
+                 onPressed: () async {
+                   MyPreciousData(inputNumbers: [3, 4, 5], inputString: 'Zero cost abstractions').sendSignalToRust();
+                },
+                child: const Text("Send a signal from Dart to Rust"),
             ),
           ],
         ),
