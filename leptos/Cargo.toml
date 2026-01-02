@@ -4,25 +4,25 @@ version = "0.2.0"
 edition = "2024"
 
 [dependencies]
-codee = { version = "0.3.0", features = ["json_serde"] }
+codee = { version = "0.3.5", features = ["json_serde"] }
 console_error_panic_hook = "0.1.7"
 futures = "0.3.31"
 gloo-file = { version = "0.3.0", features = ["futures"] }
-leptos = { version = "0.7.7", features = ["csr", "tracing"] }
+leptos = { version = "0.7.8", features = ["csr", "tracing"] }
 leptos-qr-scanner = { git = "https://github.com/elsirion/leptos-qr-scanner" }
-leptos-use = { version = "0.15.7", features = [
+leptos-use = { version = "0.15.10", features = [
     "storage",
     "docs",
     "use_user_media",
 ] }
-leptos_meta = "0.7.7"
-leptos_router = { version = "0.7.7", features = ["tracing"] }
+leptos_meta = "0.7.8"
+leptos_router = { version = "0.7.8", features = ["tracing"] }
 reactive_stores = "0.1.8"
 serde = { version = "1", features = ["derive"] }
 stylance = "0.5.5"
-thaw = { version = "0.4.4", features = ["csr"] }
+thaw = { version = "0.4.8", features = ["csr"] }
 tracing-subscriber-wasm = "0.1.0"
-web-sys = { version = "0.3.77", features = [
+web-sys = { version = "0.3.83", features = [
     "BlobEvent",
     "CanvasRenderingContext2d",
     "MediaRecorder",
@@ -30,7 +30,7 @@ web-sys = { version = "0.3.77", features = [
     "File",
     "FileList",
 ] }
-strum = { version = "0.24.0", features = ["derive"] }
+strum = { version = "0.24.1", features = ["derive"] }
 itertools = "0.14.0"
 tracing = "0.1.44"
 tracing-subscriber = "0.3.22"
